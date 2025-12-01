@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <section id="catLeft">
+
+        {% for cat in categories %}
+            {% if selectedCategory == cat['id'] %}
+                <!-- Selected category -->
+                <p class="selectedCategory">{{ cat['name'] }}</p>
+            {% else %}
+                <!-- Not selected, show link -->
+                <p class="notSelectedCategory">
+                    <a href="{{ url_for('category', categoryId=cat['id']) }}">
+                        {{ cat['name'] }}
+                    </a>
+                </p>
+            {% endif %}
+        {% endfor %}
+
+    </section>
+
+    <section id="catRight">
+        <!-- Books on the right side -->
+
+        {% for book in books %}
+        <div class='book'>
+
+            <!-- Book Image (clickable to details) -->
+            <div>
+                <a href="{{ url_for('book_detail', book_id=book['id']) }}">
+                    <img src="{{ url_for('static', filename='images/books/' ~ book['image']) }}"
+                         alt="{{ book['title'] }}">
+                </a>
+            </div>
+
+            <div class='bookDetailBox'>
+                <!-- Title (linked to detail page) -->
+                <p class='bookTitle'>
+                    <a href="{{ url_for('book_detail', book_id=book['id']) }}">
+                        {{ book['title'] }}
+                    </a>
+                </p>
+
+                <!-- Author -->
+                <p class='bookDetail'>by {{ book['author'] }}</p>
+
+                <!-- ISBN -->
+                <p class='bookDetail'>ISBN: {{ book['isbn'] }}</p>
+
+                <!-- Price -->
+                <p class='bookPrice'>${{ '%.2f'|format(book['price']) }}</p>
+
+                <!-- Add to Cart button -->
+                <a class='actionButton' href='#'>Add to cart</a>
+
+                <!-- Read Now button -->
+                {% if book['readNow'] == 1 %}
+                    <a class='actionButton' href='#'>Read Now</a>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </section>
+</main>
+{% endblock %}
+

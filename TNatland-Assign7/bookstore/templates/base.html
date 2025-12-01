@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookstore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header id="siteHeader">
+    <h1 id="logo"><a href="{{ url_for('home') }}">My Bookstore</a></h1>
+
+    <!-- Category navigation -->
+    <nav id="mainNav">
+        {% if categories %}
+            {% for c in categories %}
+                <a href="{{ url_for('category', categoryId=c['id']) }}">
+                    {{ c['name'] }}
+                </a>
+            {% endfor %}
+        {% endif %}
+    </nav>
+
+    <!-- Search form -->
+    <form id="searchForm" action="{{ url_for('search') }}" method="POST">
+        <input type="text" name="search" placeholder="Search by title">
+        <button type="submit">Search</button>
+    </form>
+</header>
+
+<div id="container">
+    {% block container %}{% endblock %}
+</div>
+
+</body>
+</html>
+

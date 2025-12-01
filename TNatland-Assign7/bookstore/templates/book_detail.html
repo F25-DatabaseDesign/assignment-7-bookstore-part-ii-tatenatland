@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main id="bookDetailPage">
+    <div class="bookDetailWrapper">
+
+        <div class="bookCover">
+            {% if book['image'] %}
+                <img src="{{ url_for('static', filename='images/books/' ~ book['image']) }}"
+                     alt="{{ book['title'] }}">
+            {% endif %}
+        </div>
+
+        <div class="bookInfo">
+            <h2 class="bookTitle">{{ book['title'] }}</h2>
+            <p class="bookDetail"><strong>Author:</strong> {{ book['author'] }}</p>
+            <p class="bookDetail"><strong>Category:</strong> {{ book['categoryName'] }}</p>
+            <p class="bookDetail"><strong>ISBN:</strong> {{ book['isbn'] }}</p>
+            <p class="bookPrice"><strong>Price:</strong> ${{ '%.2f'|format(book['price']) }}</p>
+
+            {% if book['readNow'] == 1 %}
+                <p><a class="actionButton" href="#">Read Now</a></p>
+            {% endif %}
+
+            <p><a href="{{ url_for('category', categoryId=book['categoryId']) }}">← Back to category</a></p>
+        </div>
+
+    </div>
+</main>
+{% endblock %}
+
